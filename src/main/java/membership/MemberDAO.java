@@ -17,7 +17,7 @@ public class MemberDAO extends JDBConnect{
 	public MemberDTO getMemberDTO(String uid, String upass) {
 		MemberDTO dto = new MemberDTO();
 		
-		String query = "SELECT * FROM member WHERE ID =? AND PASS=?";
+		String query = "SELECT * FROM WEBPROJECT_DB.MEMBER WHERE ID =? AND PASS=?";
 		
 		try {
 			psmt = con.prepareStatement(query);
@@ -25,10 +25,10 @@ public class MemberDAO extends JDBConnect{
 			psmt.setString(2, upass);
 			rs = psmt.executeQuery();
 			if(rs.next()) {
-				dto.setId(rs.getString("id"));
-				dto.setPass(rs.getString("pass"));
-				dto.setName(rs.getString(3));
-				dto.setRegidate(rs.getString(4));
+				dto.setId(rs.getString("ID"));
+				dto.setPass(rs.getString("PASS"));
+				dto.setName(rs.getString("NAME"));
+				dto.setRegidate(rs.getString("REGIDATE"));
 			}
 		}
 		catch(Exception e){
@@ -36,4 +36,37 @@ public class MemberDAO extends JDBConnect{
 		}
 		return dto;
 	}
+	
+	public boolean isIdExists(String uid) {
+	    String sql = "SELECT COUNT(*) FROM WEBPROJECT_DB.MEMBER WHERE ID = ?";
+	    try {
+	        psmt = con.prepareStatement(sql);
+	        psmt.setString(1, uid);
+	        rs = psmt.executeQuery();
+	        if(rs.next()) {
+	            return rs.getInt(1) > 0;
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	    return false;
+	}
+	
+	public boolean insertMember(String id, String pass, String name, String email, String phone) {
+	    String sql = "INSERT INTO WEBPROJECT_DB.MEMBER (ID, PASS, NAME, REGIDATE, EMAIL, PHONE) VALUES (?, ?, ?,SYSDATE, ?, ?)";
+	    try {
+	        psmt = con.prepareStatement(sql);
+	        psmt.setString(1, id);
+	        psmt.setString(2, pass);
+	        psmt.setString(3, name);
+	        psmt.setString(4, email);
+	        psmt.setString(5, phone);
+	        int n = psmt.executeUpdate();
+	        return n > 0;
+	    } catch(Exception e) {
+	        e.printStackTrace();
+	    }
+	    return false;
+	}
+
 }

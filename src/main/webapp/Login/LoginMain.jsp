@@ -27,11 +27,12 @@
 	}
 	</script>
 	
-	<form action="LoginProcess.jsp" method="post" name="loginFrm" onsubmit="return validateForm(this);">
+	<form action="LoginProcess.jsp" method="post" name="loginMain" onsubmit="return validateForm(this);">
 	아이디:<input type="text" name="user_id" /> <br />
 	패스워드:<input type="password" name="user_pw" /> <br />
 	<input type="submit" value="로그인하기" />
 	</form>
+	
 	<%
 	}else {//로그인된 상태
 	%>
