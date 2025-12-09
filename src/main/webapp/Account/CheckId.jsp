@@ -17,9 +17,9 @@ boolean exists = dao.isIdExists(userId);
 dao.close();
 
 if(exists){
-    response.sendRedirect("NewAccount.jsp?idCheck=NO&user_id=" + userId);
+    response.sendRedirect(request.getContextPath()+"/Account/NewAccount.jsp?idCheck=NO&user_id=" + userId);
 } else {
-    response.sendRedirect("NewAccount.jsp?idCheck=OK&user_id=" + userId);
+    response.sendRedirect(request.getContextPath()+"/Account/NewAccount.jsp?idCheck=OK&user_id=" + userId);
 }
 %>
 

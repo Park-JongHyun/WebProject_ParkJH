@@ -14,7 +14,7 @@
         <% } %>            
             &nbsp;&nbsp;&nbsp; 
             
-            <a href="#1">서블릿게시판1</a>
+            <a href="../mvcboard/list.do">서블릿게시판1</a>
             &nbsp;&nbsp;&nbsp; 
             
             <a href="#1">회원정보수정</a>

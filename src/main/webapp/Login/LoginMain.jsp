@@ -27,7 +27,7 @@
 	}
 	</script>
 	
-	<form action="LoginProcess.jsp" method="post" name="loginMain" onsubmit="return validateForm(this);">
+	<form action="<%= request.getContextPath() %>/LoginServlet" method="post" name="loginMain" onsubmit="return validateForm(this);">
 	아이디:<input type="text" name="user_id" /> <br />
 	패스워드:<input type="password" name="user_pw" /> <br />
 	<input type="submit" value="로그인하기" />
@@ -42,5 +42,24 @@
 	<% 
 	}
 	%>
+	
+	
+	<%
+	Boolean idExists = (Boolean)request.getAttribute("idExists");
+	if(idExists != null && !idExists){ 
+	%>
+	
+	<script>
+	if(confirm("아이디가 존재하지않습니다. 회원가입 하시겠습니까?")){
+		location.href = "../Account/NewAccount.jsp"
+	}else{
+		location.href = "../LoginMain.jsp"
+	}
+</script>	
+<%
+}
+%>
+	
+	
 </body>
 </html>

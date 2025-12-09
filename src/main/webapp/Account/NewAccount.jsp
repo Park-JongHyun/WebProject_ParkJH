@@ -8,6 +8,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+
 <script>
 function validateForm(form){
     if (!form.user_id.value){
@@ -45,6 +46,7 @@ function validateForm(form){
 </title>
 </head>
 <body>
+<jsp:include page="../Common/Link.jsp" />
 <h2>회원가입</h2>
 <% String error = (String) request.getAttribute("error"); %>
 <% if(error != null) { %>
@@ -54,7 +56,7 @@ function validateForm(form){
 <form action="<%= request.getContextPath() %>/RegistServlet"  method="post" name="newact" onsubmit="return validateForm(this);">
 아이디: <input type="text" name="user_id" value="<%= request.getParameter("user_id") == null ? "" : request.getParameter("user_id") %>">
 <input type="button" value="중복확인"
-       onclick="location.href='CheckId.jsp?user_id=' + document.newact.user_id.value">
+       onclick="location.href='<%= request.getContextPath() %>/Account/CheckId.jsp?user_id=' + document.newact.user_id.value">
 <br/>
 
 <%
