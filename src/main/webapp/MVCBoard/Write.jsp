@@ -26,6 +26,7 @@
 <h2>파일 첨부형 게시판 - 글쓰기(Write)</h2>
 <form name="writeFrm" method="post" enctype="multipart/form-data"
       action="../mvcboard/write.do" onsubmit="return validateForm(this);">
+<input type="hidden" name="boardType" value="${boardType}" />
 <table border="1" width="90%">
     <tr>
         <td>제목</td>
@@ -42,7 +43,9 @@
     <tr>
         <td>첨부 파일</td>
         <td>
+        	<c:if test="${ boardType == 'data' }">
             <input type="file" name="ofile" />
+            </c:if>
         </td>
     </tr>
     <tr>

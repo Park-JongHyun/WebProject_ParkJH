@@ -22,6 +22,9 @@ public class WriteController extends HttpServlet {
 		return;
 		}
 	
+		String boardType = req.getParameter("boardType");
+        req.setAttribute("boardType", boardType);
+		
 		req.getRequestDispatcher("/MVCBoard/Write.jsp").forward(req, resp);
 	}
 	
@@ -31,28 +34,36 @@ public class WriteController extends HttpServlet {
 
 	HttpSession session = req.getSession();
 	if(session.getAttribute("UserId") == null) {
-		JSFunction.alertLocation(resp, "로그인후 이용해주세요.", "../Login/LogniMain.jsp");
+		JSFunction.alertLocation(resp, "로그인후 이용해주세요.", "../Login/LoginMain.jsp");
 		return;
 	}
+	
+	String boardType = req.getParameter("boardType");
 	
 	String saveDirectory = req.getServletContext().getRealPath("/Uploads");
-	
 	String originalFileName = "";
+	
+	if("data".equals(boardType)) {
 	try {
-		originalFileName = FileUtil.uploadFile(req,saveDirectory);
+		String uploadedFile = FileUtil.uploadFile(req, saveDirectory);
+		if(uploadedFile == null || uploadedFile.isEmpty()) {
+			JSFunction.alertLocation(resp, "자료게시판은 파일 첨부가 필요합니다.", "../mvcboard/write.do?boardType="+boardType);
+			return;
+		}
+		originalFileName = uploadedFile;
 	}
 	catch (Exception e) {
-		JSFunction.alertLocation(resp, "파일 업로드 오류입니다.", "../mvcboard/write.do");
+		JSFunction.alertLocation(resp, "파일 업로드 오류입니다.", "../mvcboard/write.do?boardType="+boardType);
 		return;
 	}
-	
+	}
 	
 	MVCBoardDTO dto = new MVCBoardDTO();
 	dto.setId(session.getAttribute("UserId").toString());
 	dto.setTitle(req.getParameter("title"));
 	dto.setContent(req.getParameter("content"));
 	
-	if (originalFileName != "") {
+	if ("data".equals(boardType) && !originalFileName.isEmpty()) {
 		String saveFileName = FileUtil.renameFile(saveDirectory, originalFileName);
 		
 		dto.setOfile(originalFileName);
@@ -60,11 +71,11 @@ public class WriteController extends HttpServlet {
 	}
 	
 	MVCBoardDAO dao = new MVCBoardDAO();
-	int result = dao.insertWrite(dto);
+	int result = dao.insertWrite(dto, boardType);
 	dao.close();
 	
 	if (result == 1) {
-		resp.sendRedirect("../mvcboard/list.do");
+		resp.sendRedirect("../mvcboard/list.do?boardType="+boardType);
 	}
 	else { JSFunction.alertLocation(resp, "글쓰기에 실패합니다.", "../mvcboard/write.do");
 	

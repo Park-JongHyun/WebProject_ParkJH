@@ -20,14 +20,21 @@ public class ListController extends HttpServlet {
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		
+		String boardType = req.getParameter("boardType");
+		if(boardType == null || boardType.isEmpty()) {
+			boardType = "free";
+		}
+		map.put("boardType", boardType);
+		
+		
 		String searchField = req.getParameter("searchField");
-		String searchWord = req.getParameter("serachWord");
-		if (searchWord != null) {
+		String searchWord = req.getParameter("searchWord");
+		if (searchWord != null && !searchWord.isEmpty()) {
 			map.put("searchField",searchField);
 			map.put("searchWord", searchWord);
 		}
-		int totalCount = dao.selectCount(map);
 		
+		int totalCount = dao.selectCount(map);
 		List<MVCBoardDTO> boardLists = dao.selectList(map);
 		dao.close();
 		

@@ -2,6 +2,7 @@ package model2.mvcboard;
 
 public class MVCBoardDTO {
 	private String idx;
+	private String boardType;
 	private String id;
 	private String title;
 	private String content;
@@ -18,6 +19,12 @@ public class MVCBoardDTO {
 	}
 	public void setIdx(String idx) {
 		this.idx = idx;
+	}
+	public String getBoardType() {
+		return boardType;
+	}
+	public void setBoardType(String boardType) {
+		this.boardType = boardType;
 	}
 	public String getId() {
 		return id;

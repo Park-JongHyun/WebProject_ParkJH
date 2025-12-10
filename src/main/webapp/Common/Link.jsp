@@ -14,7 +14,13 @@
         <% } %>            
             &nbsp;&nbsp;&nbsp; 
             
-            <a href="../mvcboard/list.do">서블릿게시판1</a>
+            <a href="../mvcboard/list.do?boardType=free">자유게시판</a>
+            &nbsp;&nbsp;&nbsp; 
+            
+            <a href="../mvcboard/list.do?boardType=data">자료게시판</a>
+            &nbsp;&nbsp;&nbsp; 
+            
+            <a href="../mvcboard/list.do?boardType=notice">공지게시판</a>
             &nbsp;&nbsp;&nbsp; 
             
             <a href="#1">회원정보수정</a>

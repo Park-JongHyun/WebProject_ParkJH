@@ -11,9 +11,26 @@ public class MVCBoardDAO extends DBConnPool {
 		super();
 	}
 	
+    private String getTableName(String boardType) {
+        if (boardType == null) return "MVCBOARD_FREE"; 
+        switch (boardType) {
+            case "free":
+                return "MVCBOARD_FREE";   
+            case "data":
+                return "MVCBOARD_DATA";   
+            case "notice":
+                return "MVCBOARD_NOTICE";      
+            default:	return "MVCBOARD_FREE";
+        }
+    }
+	
 	public int selectCount(Map<String,Object>map) {
 		int totalCount = 0;
-		String query = " SELECT COUNT(*) FROM mvcboard";
+		
+		 String boardType = (String) map.get("boardType");
+	     String table = getTableName(boardType);
+		
+		String query = " SELECT COUNT(*) FROM " +table;
 		if(map.get("searchWord") != null) {
 			query += " WHERE " + map.get("searchField")+" "+" LIKE '%"+map.get("searchWord")+"%'";
 		}
@@ -31,12 +48,16 @@ public class MVCBoardDAO extends DBConnPool {
 	}
 	
 	public List<MVCBoardDTO> selectList(Map <String,Object> map){
-		List<MVCBoardDTO> board = new Vector<MVCBoardDTO>();
-		String query = " SELECT * FROM mvcboard ";
+		List<MVCBoardDTO> board = new Vector<>();
+		
+		String boardType = (String) map.get("boardType");
+        String table = getTableName(boardType);
+		
+		String query = " SELECT * FROM " + table;
 		if (map.get("searchWord") != null) {
 			query += " WHERE " + map.get("searchField")+" LIKE '%" + map.get("searchWord")+"%' ";
 		}
-		query += " ORDER BY idx DEXC ";
+		query += " ORDER BY idx DESC ";
 		
 		try {
 			psmt = con.prepareStatement(query);
@@ -45,15 +66,15 @@ public class MVCBoardDAO extends DBConnPool {
 			while (rs.next()) {
 				MVCBoardDTO dto = new MVCBoardDTO();
 				
-				dto.setIdx(rs.getString(1));
-				dto.setId(rs.getString(2));
-				dto.setTitle(rs.getString(3));
-				dto.setContent(rs.getString(4));
-				dto.setPostdate(rs.getDate(5));
-				dto.setOfile(rs.getString(6));
-				dto.setSfile(rs.getString(7));
-				dto.setDowncount(rs.getInt(8));
-				dto.setVisitcount(rs.getInt(9));
+				dto.setIdx(rs.getString("IDX"));
+				dto.setId(rs.getString("ID"));
+				dto.setTitle(rs.getString("TITLE"));
+				dto.setContent(rs.getString("CONTENT"));
+				dto.setPostdate(rs.getDate("POSTDATE"));
+				try { dto.setOfile(rs.getString("OFILE")); } catch (Exception ignore) {};
+                try { dto.setSfile(rs.getString("SFILE")); } catch (Exception ignore) {};
+				try {dto.setDowncount(rs.getInt("DOWNCOUNT"));} catch (Exception ignore) {};
+				try {dto.setVisitcount(rs.getInt("VISITCOUNT"));} catch (Exception ignore) {};
 				
 				board.add(dto);
 				
@@ -68,68 +89,38 @@ public class MVCBoardDAO extends DBConnPool {
 	
 	
 	
-	public int insertWrite(MVCBoardDTO dto) {
-		int result = 0;
-		try {
-			String query = "INSERT INTO mvcboard ( "
-					+ " idx, id, title, content, ofile, sfile)"
-					+ " VALUES ( "
-					+ " seq_board_num.NEXTVAL,?,?,?,?,?)";
-			psmt = con.prepareStatement(query);
-			psmt.setString(1, dto.getId());
-			psmt.setString(2, dto.getTitle());
-			psmt.setString(3, dto.getContent());
-			psmt.setString(4, dto.getOfile());
-			psmt.setString(5, dto.getSfile());
-			result = psmt.executeUpdate();
-		}
-		catch (Exception e) {
-			System.out.println("게시물 입력 중 예외 발생");
-			e.printStackTrace();
-		}
-		return result;
+	public int insertWrite(MVCBoardDTO dto, String boardType) {
+	    int result = 0;
+	    String table = getTableName(boardType); 
+
+	    String query;
+	    if ("data".equals(boardType)) {
+	        query = " INSERT INTO " + table + " (idx, id, title, content, ofile, sfile) "
+	              + " VALUES (seq_board_num.NEXTVAL, ?, ?, ?, ?, ?) ";
+	    } else {
+	        query = " INSERT INTO " + table + " (idx, id, title, content) "
+	              + " VALUES (seq_board_num.NEXTVAL, ?, ?, ?) ";
+	    }
+
+	    try {
+	        psmt = con.prepareStatement(query);
+	        psmt.setString(1, dto.getId());
+	        psmt.setString(2, dto.getTitle());
+	        psmt.setString(3, dto.getContent());
+
+	        if ("data".equals(boardType)) {
+	            psmt.setString(4, dto.getOfile());
+	            psmt.setString(5, dto.getSfile());
+	        }
+
+	        result = psmt.executeUpdate();
+	    } catch (Exception e) {
+	        System.out.println("게시물 입력 중 예외 발생");
+	        e.printStackTrace();
+	    }
+
+	    return result;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+
 }

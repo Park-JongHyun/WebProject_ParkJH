@@ -14,7 +14,7 @@ public class FileUtil {
 	public static String uploadFile (HttpServletRequest req, String sDirectory) throws ServletException, IOException{
 		Part part = req.getPart("ofile");
 		
-		String partHeader = part.getHeader("content - disposition");
+		String partHeader = part.getHeader("content-disposition");
 		System.out.println("partHeader="+partHeader);
 		
 		String[] phArr = partHeader.split("filename=");

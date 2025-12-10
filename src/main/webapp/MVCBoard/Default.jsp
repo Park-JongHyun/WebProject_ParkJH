@@ -11,3 +11,4 @@
     <a href="../mvcboard/list.do">게시판 목록 바로가기</a>
 </body>
 </html>
+ 

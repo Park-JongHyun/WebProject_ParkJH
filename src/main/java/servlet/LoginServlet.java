@@ -37,7 +37,7 @@ public class LoginServlet extends HttpServlet{
 		HttpSession session = req.getSession();
 		session.setAttribute("UserId", memberDTO.getId());
 		session.setAttribute("UserName", memberDTO.getName());
-		resp.sendRedirect(req.getContextPath() + "/Login/LoginMain.jsp");
+		resp.sendRedirect(req.getContextPath() + "/index.jsp");
 	}
 	else if (idExists) {
 		req.setAttribute("LoginErrMsg", "비밀번호가 일치하지 않습니다.");

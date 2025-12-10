@@ -1,13 +1,14 @@
+
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
 <html>
 <head>
 <meta charset="UTF-8">
-<title>세션</title>
+<title>Login</title>
 </head>
 <body>
-	<jsp:include page="../Common/Link.jsp" />
+	<jsp:include page="/Common/Link.jsp" />
 	<span style = "color: red; font-size: 1.2m">
 		<%= request.getAttribute("LoginErrMsg") == null?"" : request.getAttribute("LoginErrMsg") %>
 	</span>
@@ -59,7 +60,6 @@
 <%
 }
 %>
-	
-	
+
 </body>
 </html>
