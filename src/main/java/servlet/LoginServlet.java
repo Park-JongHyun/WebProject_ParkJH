@@ -41,11 +41,11 @@ public class LoginServlet extends HttpServlet{
 	}
 	else if (idExists) {
 		req.setAttribute("LoginErrMsg", "비밀번호가 일치하지 않습니다.");
-		req.getRequestDispatcher("/Login/LoginMain.jsp").forward(req, resp);
+		req.getRequestDispatcher("/index.jsp").forward(req, resp);
 	}
 	else {
 		req.setAttribute("idExists", false);
-		req.getRequestDispatcher("/Login/LoginMain.jsp").forward(req, resp);
+		req.getRequestDispatcher("/index.jsp").forward(req, resp);
 	}
 	
 	

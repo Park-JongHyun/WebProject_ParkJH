@@ -6,5 +6,6 @@ session.removeAttribute("UserName");
 
 session.invalidate();
 
-response.sendRedirect("LoginMain.jsp");
+response.sendRedirect(request.getContextPath() + "/index.jsp");
+
 %>

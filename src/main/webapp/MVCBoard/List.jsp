@@ -51,7 +51,7 @@
         <tr align="center">
             <td>${ map.totalCount - loop.index }</td>
             <td align="left">
-                <a href="../mvcboard/view.do?idx=${ row.idx }">${ row.title }</a>
+                <a href="../mvcboard/view.do?idx=${ row.idx }&boardType=${ map.boardType }">${ row.title }</a>
             </td> 
             <td>${ row.id }</td>
             <td>${ row.visitcount }</td>

@@ -24,7 +24,7 @@
 
 							<!-- Header -->
 								<header id="header">
-									<a href="index.jsp" class="logo"><strong>Editorial</strong> by HTML5 UP</a>
+									<a href="index.jsp" class="logo"></a>
 									<ul class="icons">
 										<!-- <li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
 										<li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li> -->
@@ -69,57 +69,22 @@
 									</header>
 									<ul>
 										<li><a href="index.jsp">Homepage</a></li>
-										<li><a href="generic.jsp">자유게시판</a></li>
-										<li><a href="elements.jsp">Elements</a></li>
+										<li><a href="generic.jsp">공지사항</a></li>
 										<li>
-											<span class="opener">Submenu</span>
+											<span class="opener">게시판</span>
 											<ul>
-												<li><a href="#">Lorem Dolor</a></li>
-												<li><a href="#">Ipsum Adipiscing</a></li>
-												<li><a href="#">Tempus Magna</a></li>
-												<li><a href="#">Feugiat Veroeros</a></li>
+												<li><a href="<%= request.getContextPath() %>/freeboard.jsp">자유게시판</a></li>
+												<li><a href="<%= request.getContextPath() %>/databoard.jsp">자료게시판</a></li>
+												<li><a href="#">QnA게시판</a></li>
 											</ul>
 										</li>
-										<li><a href="#">Etiam Dolore</a></li>
-										<li><a href="#">Adipiscing</a></li>
-										<li>
-											<span class="opener">Another Submenu</span>
-											<ul>
-												<li><a href="#">Lorem Dolor</a></li>
-												<li><a href="#">Ipsum Adipiscing</a></li>
-												<li><a href="#">Tempus Magna</a></li>
-												<li><a href="#">Feugiat Veroeros</a></li>
-											</ul>
-										</li>
-										<li><a href="#">Maximus Erat</a></li>
-										<li><a href="#">Sapien Mauris</a></li>
-										<li><a href="#">Amet Lacinia</a></li>
+										
+										
 									</ul>
 								</nav>
 
-							<!-- Section -->
-								<section>
-									<header class="major">
-										<h2>Ante interdum</h2>
-									</header>
-									<div class="mini-posts">
-										<article>
-											<a href="#" class="image"><img src="images/pic07.jpg" alt="" /></a>
-											<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore aliquam.</p>
-										</article>
-										<article>
-											<a href="#" class="image"><img src="images/pic08.jpg" alt="" /></a>
-											<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore aliquam.</p>
-										</article>
-										<article>
-											<a href="#" class="image"><img src="images/pic09.jpg" alt="" /></a>
-											<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore aliquam.</p>
-										</article>
-									</div>
-									<ul class="actions">
-										<li><a href="#" class="button">More</a></li>
-									</ul>
-								</section>
+
+							
 
 							<!-- Section -->
 								<section>

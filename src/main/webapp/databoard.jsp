@@ -28,12 +28,12 @@
 							<!-- Content -->
 								<section>
 									<header class="main">
-										<h1>공지사항</h1>
+										<h1>자료게시판</h1>
 									</header>
 
 									<span class="image main"></span>
 
-									<p>지금 현재 등록된 공지사항이 없습니다.</p>
+									<p></p>
 									
 
 								</section>

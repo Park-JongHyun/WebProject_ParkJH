@@ -28,15 +28,60 @@
 							<!-- Content -->
 								<section>
 									<header class="main">
-										<h1>공지사항</h1>
+										<h1>자유게시판</h1>
 									</header>
 
 									<span class="image main"></span>
+									 <form method="get" action="<%= request.getContextPath() %>/BoardServlet">  
+									  
+								        <table border="1" width="90%">
+									        <tr>
+									            <th width="10%">번호</th>
+									            <th width="*">제목</th>
+									            <th width="15%">작성자</th>
+									            <th width="10%">조회수</th>
+									            <th width="15%">작성일</th>
+									            <th width="8%">첨부</th>
+									        </tr>
+									        	<c:choose>
+  <c:when test="${empty boardLists}">
+    <tr><td colspan="6" align="center">등록된 게시물이 없습니다^^*</td></tr>
+  </c:when>
+  <c:otherwise>
+    <c:forEach items="${boardLists}" var="row" varStatus="loop">
+      <tr align="center">
+        <td>${map.totalCount - loop.index}</td>
+        <td align="left">
+          <a href="${pageContext.request.contextPath}/mvcboard/view.do?idx=${row.idx}&boardType=${map.boardType}">${row.title}</a>
+        </td>
+        <td>${row.id}</td>
+        <td>${row.visitcount}</td>
+        <td>${row.postdate}</td>
+        <td>
+          <c:if test="${not empty row.ofile}">
+            <a href="${pageContext.request.contextPath}/mvcboard/download.do?ofile=${row.ofile}&sfile=${row.sfile}&idx=${row.idx}">[Down]</a>
+          </c:if>
+        </td>
+      </tr>
+    </c:forEach>
+  </c:otherwise>
+</c:choose>
 
-									<p>지금 현재 등록된 공지사항이 없습니다.</p>
+</table>
+
+<table border="1" width="90%">
+    <tr align="center">
+        <td></td>
+        <td></td>
+        <td width="100">
+            <button type="button" onclick="location.href='../mvcboard/write.do?boardType=${map.boardType}';">글쓰기</button>
+        </td>
+    </tr>
+</table>
+									    </table>
+							  		  </form>				
 									
-
-								</section>
+									</section>
 
 						</div>
 					</div>
@@ -65,7 +110,7 @@
 											<ul>
 												<li><a href="<%= request.getContextPath() %>/freeboard.jsp">자유게시판</a></li>
 												<li><a href="<%= request.getContextPath() %>/databoard.jsp">자료게시판</a></li>
-												<li><a href="#">QnA게시판</a></li>
+												<li><a href="<%= request.getContextPath() %>/qnaboard.jsp">QnA게시판</a></li>
 											</ul>
 										</li>
 										

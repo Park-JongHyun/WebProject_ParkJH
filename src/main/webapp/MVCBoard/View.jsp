@@ -32,8 +32,8 @@
         <td>내용</td>
         <td colspan="3" height="100">
         	${ dto.content }
-        	<!-- 만약 첨부파일이 있다면 img 태그로 출력한다.  -->
-        	<c:if test="${ not empty dto.ofile }">
+        	
+        	<c:if test="${ not empty dto.ofile and isImage eq true}">
         	<br> <img src="../Uploads/${ dto.sfile }" style="max-width:100%;" />
         	</c:if>
         </td>
@@ -41,9 +41,7 @@
     <tr>
         <td>첨부파일</td>
         <td>
-        <!-- 첨부파일이 있다면 다운로드 링크를 출력  -->
         <c:if test="${ not empty dto.ofile }"> ${ dto.ofile }
-        <!-- 다운로드 링크에는 원본파일명, 저장된 파일명, 일련번호를 파라미터로 전달한다. -->
         <a href="../mvcboard/download.do?ofile=${ dto.ofile }&sfile=${ dto.sfile }&idx=${ dto.idx }">
                 [다운로드]            
         </a>
@@ -54,13 +52,14 @@
     </tr> 
     <tr>
         <td colspan="4" align="center">
-            <button type="button" onclick="location.href='../mvcboard/edit.do?idx=${ param.idx }';">
+            <button type="button" onclick="location.href='../mvcboard/edit.do?idx=${ param.idx }&boardType=${boardType}';">
                 수정하기
             </button>
-            <button type="button" onclick="location.href='../mvcboard/delete.do?idx=${ param.idx }';">
+            <button type="button" onclick="location.href='../mvcboard/delete.do?idx=${ param.idx }&boardType=${boardType}';">
                 삭제하기
             </button>
-            <button type="button" onclick="location.href='../mvcboard/list.do';">
+         
+            <button type="button" onclick="location.href='../mvcboard/list.do?boardType=${boardType}';">
                 목록 바로가기
             </button>
         </td>
