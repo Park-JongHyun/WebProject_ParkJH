@@ -58,7 +58,7 @@ public class RegistServlet extends HttpServlet{
 			    session.setAttribute("user_id", userId);  
 			    session.setAttribute("user_name", userName);
 			    
-			    resp.sendRedirect(req.getContextPath() +"/Login/LoginMain.jsp");
+			    resp.sendRedirect(req.getContextPath() +"/index.jsp");
 		}
 		else {
 			req.setAttribute("error", "로그인중 오류가 발생하였습니다");

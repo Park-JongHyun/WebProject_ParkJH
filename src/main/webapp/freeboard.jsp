@@ -43,30 +43,8 @@
 									            <th width="15%">작성일</th>
 									            <th width="8%">첨부</th>
 									        </tr>
-									        	<c:choose>
-  <c:when test="${empty boardLists}">
-    <tr><td colspan="6" align="center">등록된 게시물이 없습니다^^*</td></tr>
-  </c:when>
-  <c:otherwise>
-    <c:forEach items="${boardLists}" var="row" varStatus="loop">
-      <tr align="center">
-        <td>${map.totalCount - loop.index}</td>
-        <td align="left">
-          <a href="${pageContext.request.contextPath}/mvcboard/view.do?idx=${row.idx}&boardType=${map.boardType}">${row.title}</a>
-        </td>
-        <td>${row.id}</td>
-        <td>${row.visitcount}</td>
-        <td>${row.postdate}</td>
-        <td>
-          <c:if test="${not empty row.ofile}">
-            <a href="${pageContext.request.contextPath}/mvcboard/download.do?ofile=${row.ofile}&sfile=${row.sfile}&idx=${row.idx}">[Down]</a>
-          </c:if>
-        </td>
-      </tr>
-    </c:forEach>
-  </c:otherwise>
-</c:choose>
 
+ 
 </table>
 
 <table border="1" width="90%">
