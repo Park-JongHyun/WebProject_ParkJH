@@ -1,133 +1,145 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE HTML>
-<!--
-	Editorial by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
+
 <html>
-	<head>
-		<title>notice</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="assets/css/main.css" />
-	</head>
-	<body class="is-preload">
+<head>
+    <title>자유게시판</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="assets/css/main.css" />
+</head>
+<body class="is-preload">
 
-		<!-- Wrapper -->
-			<div id="wrapper">
+<div id="wrapper">
 
-				<!-- Main -->
-					<div id="main">
-						<div class="inner">
+    <!-- Main -->
+    <div id="main">
+        <div class="inner">
 
-							<!-- Header -->
-								<jsp:include page="/Common/Header.jsp" />
-								
-							<!-- Content -->
-								<section>
-									<header class="main">
-										<h1>자유게시판</h1>
-									</header>
+            <!-- Header -->
+            <jsp:include page="/Common/Header.jsp" />
 
-									<span class="image main"></span>
-									 <form method="get" action="<%= request.getContextPath() %>/BoardServlet">  
-									  
-								        <table border="1" width="90%">
-									        <tr>
-									            <th width="10%">번호</th>
-									            <th width="*">제목</th>
-									            <th width="15%">작성자</th>
-									            <th width="10%">조회수</th>
-									            <th width="15%">작성일</th>
-									            <th width="8%">첨부</th>
-									        </tr>
+            <!-- Content -->
+            <section>
+                <header class="main">
+                    <h1>자유게시판</h1>
+                </header>
 
- 
-</table>
+                <!-- 검색 폼 -->
+                <form method="get" action="<%= request.getContextPath() %>/BoardServlet">
+                    <table width="100%">
+                        <tr>
+                            <td align="center">
+                                <select name="searchField">
+                                    <option value="title">제목</option>
+                                    <option value="content">내용</option>
+                                </select>
+                                <input type="text" name="searchWord" />
+                                <input type="submit" value="검색" />
+                            </td>
+                        </tr>
+                    </table>
+                </form>
 
-<table border="1" width="90%">
-    <tr align="center">
-        <td></td>
-        <td></td>
-        <td width="100">
-            <button type="button" onclick="location.href='../mvcboard/write.do?boardType=${map.boardType}';">글쓰기</button>
-        </td>
-    </tr>
-</table>
-									    </table>
-							  		  </form>				
-									
-									</section>
+                <!-- 목록 -->
+                <table border="1" width="100%">
+                    <tr>
+                        <th width="10%">번호</th>
+                        <th width="*">제목</th>
+                        <th width="15%">작성자</th>
+                        <th width="10%">조회수</th>
+                        <th width="15%">작성일</th>
+                        <th width="8%">첨부</th>
+                    </tr>
 
-						</div>
-					</div>
+                    <c:choose>
+                        <c:when test="${ empty boardLists }">
+                            <tr>
+                                <td colspan="6" align="center">
+                                    등록된 게시물이 없습니다.
+                                </td>
+                            </tr>
+                        </c:when>
 
-				<!-- Sidebar -->
-					<div id="sidebar">
-						<div class="inner">
+                        <c:otherwise>
+                            <c:forEach var="row" items="${boardLists}" varStatus="loop">
+                                <tr align="center">
+                                    <td>${ map.totalCount - loop.index }</td>
 
-							<!-- Search -->
-								<section id="search" class="alt">
-									<form method="post" action="#">
-										<input type="text" name="query" id="query" placeholder="Search" />
-									</form>
-								</section>
+                                    <td align="left">
+                                        <a href="../mvcboard/view.do?idx=${row.idx}&boardType=${map.boardType}">
+                                            ${ row.title }
+                                        </a>
+                                    </td>
 
-							<!-- Menu -->
-								<nav id="menu">
-									<header class="major">
-										<h2>Menu</h2>
-									</header>
-									<ul>
-										<li><a href="index.jsp">Homepage</a></li>
-										<li><a href="generic.jsp">공지사항</a></li>
-										<li>
-											<span class="opener">게시판</span>
-											<ul>
-												<li><a href="<%= request.getContextPath() %>/freeboard.jsp">자유게시판</a></li>
-												<li><a href="<%= request.getContextPath() %>/databoard.jsp">자료게시판</a></li>
-												<li><a href="<%= request.getContextPath() %>/qnaboard.jsp">QnA게시판</a></li>
-											</ul>
-										</li>
-										
-										
-									</ul>
-								</nav>
+                                    <td>${ row.id }</td>
+                                    <td>${ row.visitcount }</td>
+                                    <td>${ row.postdate }</td>
 
-							
+                                    <td>
+                                        <c:if test="${ not empty row.ofile }">
+                                            <a href="../mvcboard/download.do?ofile=${row.ofile}&sfile=${row.sfile}&idx=${row.idx}">
+                                                [Down]
+                                            </a>
+                                        </c:if>
+                                    </td>
+                                </tr>
+                            </c:forEach>
+                        </c:otherwise>
+                    </c:choose>
 
-							<!-- Section -->
-								<section>
-									<header class="major">
-										<h2>Get in touch</h2>
-									</header>
-									<p>Sed varius enim lorem ullamcorper dolore aliquam aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore. Proin sed aliquam facilisis ante interdum. Sed nulla amet lorem feugiat tempus aliquam.</p>
-									<ul class="contact">
-										<li class="icon solid fa-envelope"><a href="#">information@untitled.tld</a></li>
-										<li class="icon solid fa-phone">(000) 000-0000</li>
-										<li class="icon solid fa-home">1234 Somewhere Road #8254<br />
-										Nashville, TN 00000-0000</li>
-									</ul>
-								</section>
+                </table>
 
-							<!-- Footer -->
-								<footer id="footer">
-									<p class="copyright">&copy; Untitled. All rights reserved. Demo Images: <a href="https://unsplash.com">Unsplash</a>. Design: <a href="https://html5up.net">HTML5 UP</a>.</p>
-								</footer>
+                <!-- 글쓰기 버튼 -->
+                <div style="text-align:right; margin-top:15px;">
+                    <button type="button"
+                            onclick="location.href='../mvcboard/write.do?boardType=${map.boardType}'">
+                        글쓰기
+                    </button>
+                </div>
 
-						</div>
-					</div>
+            </section>
 
-			</div>
+        </div>
+    </div>
 
-		<!-- Scripts -->
-			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/browser.min.js"></script>
-			<script src="assets/js/breakpoints.min.js"></script>
-			<script src="assets/js/util.js"></script>
-			<script src="assets/js/main.js"></script>
+    <!-- Sidebar (변경 없음) -->
+    <div id="sidebar">
+        <div class="inner">
+            <nav id="menu">
+                <header class="major">
+                    <h2>Menu</h2>
+                </header>
+                <ul>
+                    <li><a href="index.jsp">Homepage</a></li>
+                    <li><a href="generic.jsp">공지사항</a></li>
+                    <li>
+                        <span class="opener">게시판</span>
+                        <ul>
+                            <li><a href="freeboard.jsp">자유게시판</a></li>
+                            <li><a href="databoard.jsp">자료게시판</a></li>
+                            <li><a href="qnaboard.jsp">QnA게시판</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
 
-	</body>
+            <footer id="footer">
+                <p class="copyright">&copy; Untitled. All rights reserved.</p>
+            </footer>
+
+        </div>
+    </div>
+
+</div>
+
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/js/browser.min.js"></script>
+<script src="assets/js/breakpoints.min.js"></script>
+<script src="assets/js/util.js"></script>
+<script src="assets/js/main.js"></script>
+
+</body>
 </html>
